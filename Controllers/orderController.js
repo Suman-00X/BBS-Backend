@@ -6,8 +6,8 @@ const getAllHoodies = async (req, res) => {
   try {
     console.log("I am getAllHoodie-conttroller")
 
-    const userId = req.user._id;
-    const orders = await orderModel.find({ user: userId }).populate('products.product');
+    // const userId = req.user._id;
+    const products = await productModel.find();
     console.log(products)
     res.json(products);
   } catch (error) {
@@ -85,7 +85,10 @@ const getAllOrders = async (req, res) => {
 
   console.log("i am getAllOrders controller")
   try {
-    const orders = await orderModel.find().populate('user').populate('products.product');
+    
+    const userId = req.user._id;
+    const orders = await orderModel.find({ user: userId }).populate('products.product');
+    
     console.log(orders)
     if (!orders) {
       return res.status(404).json({ message: 'No orders found' });
