@@ -5,7 +5,9 @@ import orderModel from '../Models/OrderModel.js';
 const getAllHoodies = async (req, res) => {
   try {
     console.log("I am getAllHoodie-conttroller")
-    const products = await productModel.find();
+
+    const userId = req.user._id;
+    const orders = await orderModel.find({ user: userId }).populate('products.product');
     console.log(products)
     res.json(products);
   } catch (error) {
